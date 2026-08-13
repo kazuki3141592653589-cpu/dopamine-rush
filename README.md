@@ -250,7 +250,6 @@
       max-width: 200px;
     }
 
-    /* オンラインランキングのデザイン（ゲーム全体の雰囲気に合わせています） */
     #online-ranking-panel {
       width: 100%;
       max-width: 420px;
@@ -341,18 +340,15 @@
   </div>
 </div>
 
-<!-- ゲームの下にそのまま配置されるオンラインランキング -->
 <div id="online-ranking-panel">
   <h3>🏆 世界のオンラインランキング</h3>
   <div id="online-ranking-list" style="color: #8b949e; text-align: center; font-size: 0.8rem;">読み込み中...</div>
 </div>
 
-<!-- Firebase SDK (オンラインランキング通信用) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
   import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-  // あなたのFirebase設定（鍵）
   const firebaseConfig = {
     apiKey: "AIzaSyDN5Y2t4I18nJPN-xCULDMKwG...",
     authDomain: "adpgjn.firebaseapp.com",
@@ -696,7 +692,6 @@
 
     resultScreen.classList.remove('hidden');
 
-    // 終了時に自動でオンラインランキングへスコア送信
     try {
       await addDoc(collection(db, "rankings"), {
         name: playerName,
@@ -737,11 +732,9 @@
     historyList.innerHTML = history.map((sc, i) => `<div>#${i+1} : ${sc.toLocaleString()} pt</div>`).join('');
   }
 
-  // 前回入力した名前を復元
   const savedName = localStorage.getItem('dr_player_name');
   if (savedName) playerNameInput.value = savedName;
 
-  // リアルタイムオンラインランキングの取得・表示
   const q = query(collection(db, "rankings"), orderBy("score", "desc"), limit(5));
   onSnapshot(q, (snapshot) => {
     let html = "";
